@@ -1,35 +1,31 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Цены Фаервелла</title>
+    <title>Data Table</title>
 </head>
 <body>
 
 <table border="1">
     <tr>
         <th>ID</th>
-        <th>Name</th>
+        <th>Username</th>
         <th>Password</th>
-        <!-- Add more column headers here -->
     </tr>
 
     <?php
     $db = new SQLite3('data.db');
-    $query = 'SELECT * FROM data'; // Replace with your actual table name
+    $query = 'SELECT * FROM data';
     $result = $db->query($query);
 
     while ($row = $result->fetchArray()) {
         echo "<tr>";
-        echo "<td>" . $row['id'] . "</td>"; // Replace 'id', 'name', 'age', etc. with your actual column names
+        echo "<td>" . $row['id'] . "</td>"; 
         echo "<td>" . $row['username'] . "</td>";
         echo "<td>" . $row['password'] . "</td>";
-        // Add more table data cells here
         echo "</tr>";
     }
-
     $db->close();
     ?>
 </table>
-
 </body>
 </html>
