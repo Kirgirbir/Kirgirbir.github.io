@@ -1,58 +1,35 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Firewell Экономика</title>
-  <link rel="icon" type="image/x-icon" href="/images/FWlogo.png">
+    <title>Цены Фаервелла</title>
 </head>
 <body>
 
-<h1>Экономика фаервелла!</h1>
-<p>этот сайт - временная затычка</p>
+<table border="1">
+    <tr>
+        <th>ID</th>
+        <th>Name</th>
+        <th>Password</th>
+        <!-- Add more column headers here -->
+    </tr>
 
+    <?php
+    $db = new SQLite3('data.db');
+    $query = 'SELECT * FROM data'; // Replace with your actual table name
+    $result = $db->query($query);
 
-<style>
-table {
-border-collapse: collapse;
-width: 100%;
-color: #588c7e;
-font-family: monospace;
-font-size: 25px;
-text-align: left;
-}
-th {
-background-color: #588c7e;
-color: white;
-}
-tr:nth-child(even) {background-color: #f2f2f2}
-</style>
-</head>
-<body>
-<table>
-<tr>
-<th>Id</th>
-<th>Username</th>
-<th>Password</th>
-</tr>
-<?php
-$conn = mysqli_connect("localhost", "root", "", "company");
-// Check connection
-if ($conn->connect_error) {
-die("Connection failed: " . $conn->connect_error);
-}
-$sql = "SELECT id, username, password FROM data";
-$result = $conn->query($sql);
-if ($result->num_rows > 0) {
-// output data of each row
-while($row = $result->fetch_assoc()) {
-echo "<tr><td>" . $row["id"]. "</td><td>" . $row["username"] . "</td><td>"
-. $row["password"]. "</td></tr>";
-}
-echo "</table>";
-} else { echo "0 results"; }
-$conn->close();
-?>
+    while ($row = $result->fetchArray()) {
+        echo "<tr>";
+        echo "<td>" . $row['id'] . "</td>"; // Replace 'id', 'name', 'age', etc. with your actual column names
+        echo "<td>" . $row['username'] . "</td>";
+        echo "<td>" . $row['password'] . "</td>";
+        // Add more table data cells here
+        echo "</tr>";
+    }
+
+    $db->close();
+    ?>
 </table>
-
 
 </body>
 </html>
