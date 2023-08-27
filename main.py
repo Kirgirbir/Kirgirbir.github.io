@@ -42,4 +42,4 @@ async def showprice(interaction: discord.Interaction, id_to_show: str):
 
 
 
-client.run('MTA3NzY1NTk3MTMxNDI5MDcyMA.GV-8PW.CKYVvDa5jcHrUlb13B2mCIOUuWxpWqwQ4pPNik')
+client.run('token')
