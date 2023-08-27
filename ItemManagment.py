@@ -170,3 +170,14 @@ class InitView(View):
     @button(label='Удалить предмет', custom_id='delete')
     async def delitem(self, interaction: discord.Interaction, button: discord.ui.Button):
         await interaction.response.send_modal(DeleteItem())
+
+async def get_price_info(id_to_retrieve):
+    conn = sqlite3.connect('data.db')
+    cursor = conn.cursor()
+
+    select_query = f"SELECT * FROM Prices WHERE id = {id_to_retrieve}"
+    cursor.execute(select_query)
+    row = cursor.fetchone()
+    conn.close()
+
+    return row

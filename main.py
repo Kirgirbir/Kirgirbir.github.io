@@ -1,6 +1,6 @@
 import discord
 from discord import app_commands
-from ItemManagment import InitView
+from ItemManagment import InitView, get_price_info
 
 
 class MyClient(discord.Client):
@@ -20,10 +20,26 @@ class MyClient(discord.Client):
 client = MyClient()
 
 
-@client.tree.command(description="Добавить Предмет")
+@client.tree.command(description="Манипуляции на рынке предметов")
 async def manageitem(interaction: discord.Interaction):
     view = InitView()
     await interaction.response.send_message(view = view, ephemeral = True)
 
-bot_token = input()
-client.run('bot_token')
+@client.tree.command(description = "Показать цену на предмет по имени/тегу")
+async def showprice(interaction: discord.Interaction, id_to_show: str):
+    row = await get_price_info(int(id_to_show))
+
+    if row:
+        id_val, product, tag, description, price = row
+
+        embed = discord.Embed(title=f"Инормация о предмете: {product}",
+                              description=f"Название: {product}\nОписание: {description}\nЦена: {price} ОТН",
+                              color=discord.Color.green())
+
+        await interaction.response.send_message(embed=embed)
+    else:
+        await interaction.response.send_messaged("No information found for the specified ID.")
+
+
+
+client.run('MTA3NzY1NTk3MTMxNDI5MDcyMA.GV-8PW.CKYVvDa5jcHrUlb13B2mCIOUuWxpWqwQ4pPNik')
