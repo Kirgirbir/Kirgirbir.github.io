@@ -25,5 +25,5 @@ async def manageitem(interaction: discord.Interaction):
     view = InitView()
     await interaction.response.send_message(view = view, ephemeral = True)
 
-
-client.run('MTA3NzY1NTk3MTMxNDI5MDcyMA.GaF_Lb.bDFOEwuU4lRLJ4AOYn-qFg_hCNPmtxLMGb2XtM')
+bot_token = input()
+client.run('bot_token')
