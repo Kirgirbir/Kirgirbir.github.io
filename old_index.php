@@ -1,43 +1,23 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Data Table</title>
-</head>
-<body>
+<?php
 
-<form method="post">
-    <select name="selected_tag">
- 	<option value="еда" <?php if(isset($_POST['selected_tag']) && $_POST['selected_tag'] == 'еда') echo 'selected'; ?>>Еда</option>
-        <option value="холодное оружие" <?php if(isset($_POST['selected_tag']) && $_POST['selected_tag'] == 'холодное оружие') echo 'selected'; ?>>Холодное оружие</option>
-    </select>
-    </select>
-    <input type="submit" value="Filter">
-</form>
+// Check if the request method is POST
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    // Retrieve the values of x and y from the POST data
+    $x = isset($_POST['x']) ? $_POST['x'] : 0;
+    $y = isset($_POST['y']) ? $_POST['y'] : 0;
 
-<table border="1">
-    <tr>
-        <th>Товар</th>
-        <th>Описание</th>
-        <th>Цена</th>
-    </tr>
+    // Calculate the sum of x and y
+    $z = $x + $y;
 
-    <?php
-    if ($_SERVER["REQUEST_METHOD"] == "POST") {
-        $selectedTag = $_POST["selected_tag"];
-        $db = new SQLite3('data.db');
-        $query = "SELECT * FROM Prices WHERE tag = '$selectedTag'";
-        $result = $db->query($query);
+    // Display the result
+    echo "$x + $y = $z";
 
-        while ($row = $result->fetchArray()) {
-            echo "<tr>";
-            echo "<td>" . $row['product'] . "</td>"; 
-            echo "<td>" . $row['description'] . "</td>";
-            echo "<td>" . $row['price'] . "</td>";
-            echo "</tr>";
-        }
-        $db->close();
-    }
-    ?>
-</table>
-</body>
-</html>
+    // Return the sum as a JSON response
+    echo json_encode(['result' => $z]);
+} else {
+    // Return an error response for unsupported request methods
+    http_response_code(405);
+    echo 'Method Not Allowed';
+}
+
+?>
